@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35521.163 d17.12
+VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Algorithms1", "Algorithms1\Algorithms1.vcxproj", "{E1602C15-0AC5-4FD5-B866-E3E408046E2B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class", "Class\Class.vcxproj", "{9E1D241E-F7A7-4693-B105-30E866A4929A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Linkedlists", "Linkedlists\Linkedlists.vcxproj", "{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,22 @@ Global
 		{E1602C15-0AC5-4FD5-B866-E3E408046E2B}.Release|x64.Build.0 = Release|x64
 		{E1602C15-0AC5-4FD5-B866-E3E408046E2B}.Release|x86.ActiveCfg = Release|Win32
 		{E1602C15-0AC5-4FD5-B866-E3E408046E2B}.Release|x86.Build.0 = Release|Win32
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Debug|x64.ActiveCfg = Debug|x64
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Debug|x64.Build.0 = Debug|x64
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Debug|x86.ActiveCfg = Debug|Win32
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Debug|x86.Build.0 = Debug|Win32
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Release|x64.ActiveCfg = Release|x64
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Release|x64.Build.0 = Release|x64
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Release|x86.ActiveCfg = Release|Win32
+		{9E1D241E-F7A7-4693-B105-30E866A4929A}.Release|x86.Build.0 = Release|Win32
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Debug|x64.ActiveCfg = Debug|x64
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Debug|x64.Build.0 = Debug|x64
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Debug|x86.ActiveCfg = Debug|Win32
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Debug|x86.Build.0 = Debug|Win32
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Release|x64.ActiveCfg = Release|x64
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Release|x64.Build.0 = Release|x64
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Release|x86.ActiveCfg = Release|Win32
+		{EC259EB6-3F6A-4CED-8282-146BEC40A9A7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
