@@ -1,6 +1,6 @@
-# Doubly Linked List (C++)
+# Doubly Linked List
 
-This project contains a custom implementation of a doubly linked list in C++. It provides all fundamental operations to manage and manipulate nodes in both directions (forward and backward), ideal for learning purposes or practicing data structure fundamentals.
+Custom implementation of a doubly linked list in C++. Including nodes manipulation in both directions.
 
 ---
 
