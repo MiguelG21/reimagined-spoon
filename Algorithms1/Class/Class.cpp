@@ -1,109 +1,244 @@
 ﻿#include <iostream>
-#include <unordered_map>
+#include <stack>
+#include <queue>
 #include <string>
-#include <thread>
-#include <chrono>
-#include <random>
+#include <sstream>
 
-class TrafficLightController {
+void solve1(std::string string) {
+	std::stack<char> stack;
+	for (int i = 0; i < string.length(); i++) {
+		stack.push(string[i]);
+	}
+	for (int i = 0; i < string.length(); i++) {
+		string[i] = stack.top();
+		stack.pop();
+	}
+	std::cout << string;
+}
+
+void solve2(std::string string) {	
+	std::stack<char> stack;
+	for (char c : string) {
+		if (c == ')') {
+			if (!stack.empty() && stack.top() == '(') {
+				stack.pop();
+			}
+			else {
+				std::cout << "invalid";
+				return;
+			}
+		}
+		else {
+			stack.push(c);
+		}
+		
+	}
+	if (!stack.empty()) {
+		std::cout << "invalid string";
+	}
+	else {
+		std::cout << "valid string";
+	}
+}
+
+class StackUsingQueues {
 private:
-    struct Lane {
-        int traffic;
-        bool emergency;
-    };
-
-    std::unordered_map<std::string, Lane> lanes;
-    std::string current_green;
-    std::vector<std::string> cycle_order = { "North", "South", "East", "West" };
-    int current_index = 0;
-    std::chrono::time_point<std::chrono::steady_clock> last_update;
-    std::mt19937 rng;
+    std::queue<int> queue1;
+    std::queue<int> queue2;
 
 public:
-    TrafficLightController() : rng(std::random_device{}()) {
-        std::uniform_int_distribution<int> traffic_dist(5, 25);
-        for (const auto& direction : cycle_order) {
-            lanes[direction] = { traffic_dist(rng), false };
-        }
-        last_update = std::chrono::steady_clock::now();
+    void push(int x) {
+        queue1.push(x);
     }
 
-    void update_traffic() {
-        std::cout << "\n--- Adding new traffic ---" << std::endl;
-        std::uniform_int_distribution<int> new_traffic_dist(1, 3);
-        for (auto& [lane, data] : lanes) {
-            if (lane != current_green) {
-                int new_vehicles = new_traffic_dist(rng);
-                data.traffic += new_vehicles;
-                std::cout << lane << ": +" << new_vehicles << " → " << data.traffic << std::endl;
-            }
+    int pop() {
+        if (empty()) {
+            throw std::out_of_range("Stack is empty");
         }
+        while (queue1.size() > 1) {
+            queue2.push(queue1.front());
+            queue1.pop();
+        }
+   
+        int poppedElement = queue1.front();
+        queue1.pop();
+
+        std::swap(queue1, queue2);
+        return poppedElement;
     }
 
-    void switch_light(const std::string& new_lane) {
-        if (!current_green.empty()) {
-            std::cout << "\n" << current_green << " → YELLOW (3s)" << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(3));
-            std::cout << current_green << " → RED" << std::endl;
+    int top() {
+        if (empty()) {
+            throw std::out_of_range("Stack is empty");
         }
-        std::cout << "\n" << new_lane << " → GREEN (Initial traffic: " << lanes[new_lane].traffic << " vehicles)" << std::endl;
-        current_green = new_lane;
+
+        while (queue1.size() > 1) {
+            queue2.push(queue1.front());
+            queue1.pop();
+        }
+
+        int topElement = queue1.front();
+
+        queue2.push(topElement);
+        queue1.pop();
+
+        std::swap(queue1, queue2);
+        return topElement;
     }
 
-    void run_phase(int duration) {
-        auto start_time = std::chrono::steady_clock::now();
-        while (std::chrono::duration_cast<std::chrono::seconds>(
-            std::chrono::steady_clock::now() - start_time)
-            .count() < duration) {
-            lanes[current_green].traffic = std::max(0, lanes[current_green].traffic - 2);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
+    bool empty() const {
+        return queue1.empty();
     }
 
-    void run() {
-        try {
-            while (true) {
-                auto emergency_lane = std::find_if(lanes.begin(), lanes.end(), [](const auto& pair) {
-                    return pair.second.emergency;
-                    });
-
-                if (emergency_lane != lanes.end()) {
-                    std::cout << "\nEMERGENCY IN " << emergency_lane->first << "! Overriding signals..." << std::endl;
-                    switch_light(emergency_lane->first);
-                    run_phase(15);
-                    emergency_lane->second.emergency = false;
-                    continue;
-                }
-
-                std::string next_lane = cycle_order[current_index];
-                current_index = (current_index + 1) % 4;
-                switch_light(next_lane);
-
-                int current_traffic = lanes[next_lane].traffic;
-                int phase_duration = (current_traffic > 15) ? 15 : 10;
-                std::cout << "Phase duration: " << phase_duration << "s (Traffic: " << current_traffic << " vehicles)" << std::endl;
-
-                run_phase(phase_duration);
-
-                if (std::chrono::duration_cast<std::chrono::seconds>(
-                    std::chrono::steady_clock::now() - last_update).count() >= 30) {
-                    update_traffic();
-                    last_update = std::chrono::steady_clock::now();
-                }
-            }
-        }
-        catch (...) {
-            std::cout << "\nSimulation stopped." << std::endl;
-        }
+    int size() const {
+        return queue1.size();
     }
 };
 
-int main() {
-    TrafficLightController controller;
-    std::cout << "Initial traffic:" << std::endl;
-    for (const auto& [lane, data] : controller.lanes) {
-        std::cout << lane << ": " << data.traffic << " vehicles" << std::endl;
+std::vector<int> nextGreaterElement(const std::vector<int>& arr) {
+    int n = arr.size();
+    std::vector<int> result(n, -1);
+    std::stack<int> stack; // Stack to store indices
+
+    for (int i = 0; i < n; ++i) {
+        while (!stack.empty() && arr[stack.top()] < arr[i]) {
+            int poppedIndex = stack.top();
+            stack.pop();
+            result[poppedIndex] = arr[i];
+        }
+        stack.push(i);
     }
-    controller.run();
-    return 0;
+    return result;
+}
+
+void solve5(const std::string& expression) {
+    std::istringstream stream(expression);
+    std::string token;
+    std::stack<int> stack;
+    std::vector<std::string> operators = { "+","-", "*", "/" };
+
+    while (stream >> token) {
+        auto it = std::find(operators.begin(), operators.end(), token);
+        if (it == operators.end()) {
+            stack.push(std::stoi(token));
+        }
+        else {
+            int operand1 = stack.top();
+            stack.pop();
+            int operand2 = stack.top();
+            stack.pop();
+            
+            int result;
+            switch (token[0]) {
+            case '+':
+                result = operand1 + operand2;
+                break;
+            case '-':
+                result = operand2 - operand1;
+                break;
+            case '*':
+                result = operand1 * operand2;
+                break;
+            case '/':
+                if (operand1 == 0) {
+                    std::cout << "Error Division by 0!";
+                    return;
+                }
+                else {
+                    result = operand2 / operand1;
+                    break;
+                }
+            }
+            stack.push(result);
+        }
+    }
+    if (stack.size() == 1) {
+        std::cout << stack.top();
+    }
+    else {
+        std::cout << "Error in input";
+    }
+}
+class QueueUsingStacks {
+private:
+    std::stack<int> stackEnqueue;
+    std::stack<int> stackDequeue;
+
+public:
+    void enqueue(int x) {
+        stackEnqueue.push(x);
+    }
+
+    int dequeue() {
+        if (empty()) {
+            throw std::out_of_range("Queue is empty");
+        }
+        // If stackDequeue is empty, transfer elements from stackEnqueue
+        if (stackDequeue.empty()) {
+            while (!stackEnqueue.empty()) {
+                stackDequeue.push(stackEnqueue.top());
+                stackEnqueue.pop();
+            }
+        }
+        int frontElement = stackDequeue.top();
+        stackDequeue.pop();
+        return frontElement;
+    }
+
+    int peek() {
+        if (empty()) {
+            throw std::out_of_range("Queue is empty");
+        }
+        if (stackDequeue.empty()) {
+            while (!stackEnqueue.empty()) {
+                stackDequeue.push(stackEnqueue.top());
+                stackEnqueue.pop();
+            }
+        }
+        return stackDequeue.top();
+    }
+
+    bool empty() const {
+        return stackEnqueue.empty() && stackDequeue.empty();
+    }
+
+    size_t size() const {
+        return stackEnqueue.size() + stackDequeue.size();
+    }
+};
+
+void solve7(int n) {
+    if (n <= 0) {
+        return;
+    }
+
+    std::queue<std::string> q;
+
+    // Enqueue the first binary number (1)
+    q.push("1");
+    std::cout << q.front() << " ";
+
+    // Generate and print binary numbers up to N
+    for (int i = 1; i < n; ++i) {
+        // Get the current binary number from the front of the queue
+        std::string current = q.front();
+        q.pop();
+
+        // Generate the next two binary numbers by appending '0' and '1'
+        std::string next1 = current + "0";
+        std::string next2 = current + "1";
+
+        // Enqueue the generated binary numbers
+        q.push(next1);
+        q.push(next2);
+
+        // Print the next binary number (which is now at the front)
+        std::cout << q.front() << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+	solve7(300);
+	return 0;
 }
