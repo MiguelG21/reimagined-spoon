@@ -1,6 +1,6 @@
-# Linked List in C++
+# Linked List
 
-This is a simple template implementation of a **singly linked list** in C++.
+This is a simple template implementation of a **singly linked list**.
 
 ## Features
 
