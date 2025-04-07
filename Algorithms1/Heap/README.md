@@ -3,6 +3,13 @@
 **Manual implementation of a Max Heap** in C++ using a dynamic array (via `std::vector`). It avoids STL heap or priority queue structures for practice purpose. This implementation supports insertion, deletion, extraction of the maximum value, heapification from an array, and more.
 
 ---
+### Recent Refactor
+
+The heap implementation was recently refactored to remove manual size tracking (`_size`) and instead use the built-in `vect.size()` method for size management. This change improves **readability** and **maintainability**, as well as reduces potential for errors associated with manual size management.
+
+- All functions were updated to rely on `vect.size()` instead of `_size`.
+- The recursion in `shiftUp()` was simplified for clearer logic, especially at the root node.
+---
 
 ## Function Descriptions
 
