@@ -57,9 +57,3 @@ This repository contains several classic data structure problems implemented in 
 **Example Output:** `1 10 11 100 101`
 
 ---
-
-## 🚀 How to Run
-
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/your-repo-name.git
