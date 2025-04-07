@@ -2,7 +2,6 @@
 #include <vector>
 
 class MaxHeap {
-    int _size{};
     std::vector<int> vect = { -1 };
 
     int parent(int i) { return i >> 1; }; // i / 2
@@ -10,9 +9,10 @@ class MaxHeap {
     int right(int i) { return (i << 1) + 1; }; // i * 2 + 1
 
 public:
-    bool isEmpty() const { return _size == 0; };
+    int size() const { return vect.size() - 1; }
+    bool isEmpty() const { return size() == 0; }
     int getMax() const {
-        if (_size == 0) throw std::out_of_range("Heap is empty!");
+        if (isEmpty()) throw std::out_of_range("Heap is empty!");
         return vect[1];
     }
     void insertItem(int value);
@@ -25,49 +25,51 @@ public:
 };
 
 void MaxHeap::shiftUp(int i) {
-    if (i > _size) return;
-    if(i == 1) return;
+    if (i == 1) return;  // No need to move root
     if (vect[i] > vect[parent(i)]) {
         std::swap(vect[parent(i)], vect[i]);
+        shiftUp(parent(i));  // Recurse upwards
     }
-    shiftUp(parent(i));
 }
 
+
 void MaxHeap::insertItem(int val) {
-    if (_size + 1 >= vect.size()) {
-        vect.push_back(0);
-    }
-    vect[++_size] = val;
-    shiftUp(_size);
-    return;
+    vect.push_back(val);
+    shiftUp(size());
 }
 
 void MaxHeap::shiftDown(int i) {
-    if (i > _size) return;
     int swapId = i;
-    if (left(i) <= _size && vect[i] < vect[left(i)]) {
-        swapId = left(i);
+    int leftChild = left(i);
+    int rightChild = right(i);
+
+    if (leftChild <= size() && vect[i] < vect[leftChild]) {
+        swapId = leftChild;
     }
-    if (right(i) <= _size && vect[swapId] < vect[right(i)]) {
-        swapId = right(i);
+    if (rightChild <= size() && vect[swapId] < vect[rightChild]) {
+        swapId = rightChild;
     }
-    if(swapId != i){
+
+    if (swapId != i) {
         std::swap(vect[i], vect[swapId]);
-    shiftDown(swapId);
+        shiftDown(swapId);  // Recurse down
     }
-    return;
 }
 
 int MaxHeap::extractMax() {
-    int maxNum = vect[1];
-    std::swap(vect[1], vect[_size--]);
+    if (isEmpty()) throw std::out_of_range("Heap is empty!");
+
+    int maxVal = vect[1];
+    std::swap(vect[1], vect.back());
+    vect.pop_back(); // Remove last element
     shiftDown(1);
-        return maxNum;
+    return maxVal;
 }
+
 
 void MaxHeap::deleteItem(int val) {
     int index = -1;
-    for (int i = 1; i <= _size; ++i) {
+    for (int i = 1; i < vect.size(); ++i) {
         if (vect[i] == val) {
             index = i;
             break;
@@ -78,30 +80,31 @@ void MaxHeap::deleteItem(int val) {
         return;
     }
 
-    std::swap(vect[index], vect[_size]);
-    _size--;
+    std::swap(vect[index], vect.back());
+    vect.pop_back();
 
     shiftDown(index);
     shiftUp(index);
 }
 
 void MaxHeap::heapify(const std::vector<int>& data) {
-    vect = { -1 };
+    vect = { -1 }; // Preserve 1-based indexing
     vect.insert(vect.end(), data.begin(), data.end());
-    _size = static_cast<int>(data.size());
 
-    for (int i = _size / 2; i >= 1; --i) {
+    for (int i = size() / 2; i >= 1; --i) {
         shiftDown(i);
     }
 }
 
+
 void MaxHeap::printHeap() const {
     std::cout << "Heap: ";
-    for (int i = 1; i <= _size; ++i) {
+    for (int i = 1; i < vect.size(); ++i) {
         std::cout << vect[i] << " ";
     }
     std::cout << std::endl;
 }
+
 
 int main()
 {
