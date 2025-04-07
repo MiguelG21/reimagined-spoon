@@ -20,6 +20,8 @@ public:
     int extractMax();
     void shiftDown(int i);
     void deleteItem(int val);
+    void heapify(const std::vector<int>& data);
+    void printHeap() const;
 };
 
 void MaxHeap::shiftUp(int i) {
@@ -64,25 +66,42 @@ int MaxHeap::extractMax() {
 }
 
 void MaxHeap::deleteItem(int val) {
-    int indexToDelete = -1;
+    int index = -1;
     for (int i = 1; i <= _size; ++i) {
         if (vect[i] == val) {
-            indexToDelete = i;
+            index = i;
             break;
         }
     }
-    if (indexToDelete == -1) {
+    if (index == -1) {
         std::cout << "Value not found in heap." << std::endl;
         return;
     }
 
-    std::swap(vect[indexToDelete], vect[_size]);
+    std::swap(vect[index], vect[_size]);
     _size--;
 
-    shiftDown(indexToDelete);
-    shiftUp(indexToDelete);
+    shiftDown(index);
+    shiftUp(index);
 }
 
+void MaxHeap::heapify(const std::vector<int>& data) {
+    vect = { -1 };
+    vect.insert(vect.end(), data.begin(), data.end());
+    _size = static_cast<int>(data.size());
+
+    for (int i = _size / 2; i >= 1; --i) {
+        shiftDown(i);
+    }
+}
+
+void MaxHeap::printHeap() const {
+    std::cout << "Heap: ";
+    for (int i = 1; i <= _size; ++i) {
+        std::cout << vect[i] << " ";
+    }
+    std::cout << std::endl;
+}
 
 int main()
 {
