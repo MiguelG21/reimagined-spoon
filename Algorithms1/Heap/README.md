@@ -9,6 +9,14 @@ The heap implementation was recently refactored to remove manual size tracking (
 
 - All functions were updated to rely on `vect.size()` instead of `_size`.
 - The recursion in `shiftUp()` was simplified for clearer logic, especially at the root node.
+
+### Recent feature: Add MinHeap implementation
+The core structure and logic of a MaxHeap and MinHeap are the same — both are binary heaps implemented as arrays with 1-based indexing. The only difference lies in the comparison logic used during heap operations.
+
+To convert a MaxHeap into a MinHeap, you only need to flip the comparison operators in the shiftUp() and shiftDown() functions.
+
+- Rename getMax() to getMin()
+- Rename extractMax() to extractMin()
 ---
 
 ## Function Descriptions
