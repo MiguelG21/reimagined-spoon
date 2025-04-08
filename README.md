@@ -17,34 +17,6 @@ This repository currently include implementations and explanations of the follow
 - Stack and Queue
 - Priority Queue (Heap - Max & Min)
 
-### 🔹 Algorithms
-
-### 🔹 Bit Manipulation
-
-### 🔹 Recursion & Backtracking
-
-### 🔹 Sliding Window & Two Pointers
-
-### 🔹 Advanced Graph Algorithms
-
-### 🔹 Dynamic Programming Patterns
-
-### 🔹 Advanced Sorting
-
-### 🔹 Tries (Prefix Trees)
-
-### 🔹 Range Query Structures
-
-### 🔹 Number Theory
-
-### 🔹 Matrix Algorithms
-
-### 🔹 Game Theory
-
-### 🔹 Monte Carlo & Approximation
-
-### 🔹 System Design & Scalability
-
 ---
 
 ## 🛠 Work in Progress
