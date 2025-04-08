@@ -61,5 +61,5 @@ Correct 98 62 25 Correct
 ## Notes
 
 - Internally, the heap is stored in a `std::vector<int>` starting at index 1. Index 0 holds a dummy `-1` value to simplify parent/child index calculations.
-- This heap only supports integers and maintains the **Max Heap** property.
+- This heap only supports integers.
 ---
