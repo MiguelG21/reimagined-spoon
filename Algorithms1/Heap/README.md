@@ -9,6 +9,14 @@ The heap implementation was recently refactored to remove manual size tracking (
 
 - All functions were updated to rely on `vect.size()` instead of `_size`.
 - The recursion in `shiftUp()` was simplified for clearer logic, especially at the root node.
+
+### Recent feature: Add MinHeap implementation
+The core structure and logic of a MaxHeap and MinHeap are the same — both are binary heaps implemented as arrays with 1-based indexing. The only difference lies in the comparison logic used during heap operations.
+
+To convert a MaxHeap into a MinHeap, you only need to flip the comparison operators in the shiftUp() and shiftDown() functions.
+
+- Rename getMax() to getMin()
+- Rename extractMax() to extractMin()
 ---
 
 ## Function Descriptions
@@ -53,5 +61,5 @@ Correct 98 62 25 Correct
 ## Notes
 
 - Internally, the heap is stored in a `std::vector<int>` starting at index 1. Index 0 holds a dummy `-1` value to simplify parent/child index calculations.
-- This heap only supports integers and maintains the **Max Heap** property.
+- This heap only supports integers.
 ---
