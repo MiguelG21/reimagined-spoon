@@ -16,6 +16,7 @@ This repository currently include implementations and explanations of the follow
 - Linked Lists (Singly, Doubly)
 - Stack and Queue
 - Priority Queue (Heap - Max & Min)
+- Hash Table (Open addressing & Chaining method)
 
 ---
 
