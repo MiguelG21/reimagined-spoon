@@ -4,14 +4,14 @@
 
 class HashTable {
     static const int hashGroups = 10;
-    std::list<std::pair<int, std::string>> table[hashGroups];
+    std::list<std::pair<int, std::list<std::string>>> table[hashGroups];
 
 public:
     bool isEmpty() const;
     int hashFunction(int key) const;
     void insertItem(int key, std::string value);
-    void removeItem(int key);
-    std::string searchTable(int key) const;
+    void removeItem(int key, std::string value);
+    std::list<std::string> searchTable(int key) const;
     void printTable() const;
 };
 
@@ -34,50 +34,57 @@ int HashTable::hashFunction(int key) const {
 void HashTable::insertItem(int key, std::string value) {
     int hashValue = hashFunction(key);
     auto& cell = table[hashValue];
-    bool keyExist = false;
-    for (auto it = begin(cell); it != end(cell); it++) {
-        if(it->first == key) {
-            keyExist = true;
-            it->second = value;
-            std::cout << "Value replaced" << std::endl;
-            break;
+
+    for (auto& pair : cell) {
+        if (pair.first == key) {
+            pair.second.push_back(value);
+            std::cout << "Value added to existing key\n";
+            return;
         }
     }
-    if (!keyExist) {
-        cell.emplace_back(key, value);  // <-- insert here
-        std::cout << "Value inserted" << std::endl;
-    }
-    return;
+
+    cell.emplace_back(key, std::list<std::string>{value});
+    std::cout << "New key with value inserted\n";
 }
 
-void HashTable::removeItem(int key) {
+void HashTable::removeItem(int key, std::string value) {
     int hashValue = hashFunction(key);
     auto& cell = table[hashValue];
-    bool keyExist = false;
-    for (auto it = begin(cell); it != end(cell); it++) {
+
+    for (auto it = cell.begin(); it != cell.end(); ++it) {
         if (it->first == key) {
-            keyExist = true;
-            it = cell.erase(it);
-            std::cout << "Value deleted" << std::endl;
-            break;
+            auto& valList = it->second;
+            valList.remove(value); // removes all matching values
+
+            if (valList.empty()) {
+                cell.erase(it); // delete the entire pair if no more values
+                std::cout << "Key and value removed (no more values left)\n";
+            }
+            else {
+                std::cout << "Value removed from key\n";
+            }
+            return;
         }
     }
-    if (!keyExist) {
-        std::cout << "Key not found" << std::endl;
-    }
-    return;
+
+    std::cout << "Key not found\n";
 }
 
+
 void HashTable::printTable() const {
-    for (int i{}; i < hashGroups; i++) {
-        if (table[i].size() == 0) continue;
-        for (auto it = table[i].begin(); it != table[i].end(); it++) {
-            std::cout << "Key: " << it->first << " Value: " << it->second << std::endl;
+    for (int i = 0; i < hashGroups; ++i) {
+        for (const auto& pair : table[i]) {
+            std::cout << "Key: " << pair.first << " -> ";
+            for (const auto& val : pair.second) {
+                std::cout << val << ", ";
+            }
+            std::cout << "\n";
         }
     }
-};
+}
 
-std::string HashTable::searchTable(int key) const {
+
+std::list<std::string> HashTable::searchTable(int key) const {
     int hashValue = hashFunction(key);
     const auto& cell = table[hashValue];
 
@@ -86,9 +93,9 @@ std::string HashTable::searchTable(int key) const {
             return pair.second;
         }
     }
-
-    return "Not found";
+    return {};
 }
+
 
 int main()
 {
