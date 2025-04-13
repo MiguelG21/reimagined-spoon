@@ -386,6 +386,14 @@ FodyWeavers.xsd
 !.vscode/extensions.json
 *.code-workspace
 
+# Ignore Visual Studio files
+.vs/
+.vscode/
+*.vcxproj
+*.vcxproj.filters
+*.user
+*.suo
+
 # Local History for Visual Studio Code
 .history/
 
