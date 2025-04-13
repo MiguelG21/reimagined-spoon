@@ -1,12 +1,10 @@
 #include "header.h"
 #include <queue>
 
-// Node constructor
 Node::Node(int value, Node* parent)
-    : data(value), left(nullptr), right(nullptr), parent(parent) {
+    : data(value), height(1), left(nullptr), right(nullptr), parent(parent) {
 }
 
-// BinaryTree constructor
 BinaryTree::BinaryTree() : root(nullptr) {}
 
 void BinaryTree::insert(Node*& node, int value, Node* parent) {
@@ -19,6 +17,28 @@ void BinaryTree::insert(Node*& node, int value, Node* parent) {
     else {
         insert(node->right, value, node);
     }
+}
+
+bool BinaryTree::isBalanced(Node* node) {
+    return checkBalance(node) != -1;
+}
+bool BinaryTree::isBalanced() {
+    return isBalanced(root);
+}
+int BinaryTree::checkBalance(Node* node) {
+    if (node == nullptr)
+        return 0;
+
+    int leftHeight = checkBalance(node->left);
+    if (leftHeight == -1) return -1;
+
+    int rightHeight = checkBalance(node->right);
+    if (rightHeight == -1) return -1;
+
+    if (abs(leftHeight - rightHeight) > 1)
+        return -1;
+
+    return 1 + std::max(leftHeight, rightHeight);
 }
 
 void BinaryTree::insert(int value) {
@@ -74,6 +94,10 @@ Node* BinaryTree::deleteNode(Node* node, int value) {
     return node;
 }
 
+void BinaryTree::deleteValue(int value) {
+    root = deleteNode(root, value); 
+}
+
 int BinaryTree::countNodes(Node* node) {
     if (node == nullptr)
         return 0;
@@ -88,7 +112,6 @@ int BinaryTree::height(Node* node) {
     return 1 + (leftHeight > rightHeight ? leftHeight : rightHeight);
 }
 
-// Print functions
 void BinaryTree::printPreorder() {
     dfsPreorder(root);
     std::cout << std::endl;
