@@ -15,8 +15,9 @@ This repository currently include implementations and explanations of the follow
 ### 🔹 Data Structures
 - Linked Lists (Singly, Doubly)
 - Stack and Queue
-- Priority Queue (Heap - Max & Min)
-- Hash Table (Open addressing & Chaining method)
+- Priority Queues (Heap - Max & Min)
+- Hash Tables (Open addressing & Chaining method)
+- Binary trees (DFS and BFS methods)
 
 ---
 
