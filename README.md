@@ -5,7 +5,7 @@ Welcome to my personal C++ repository dedicated to implementing, and documenting
 This repository is a **work in progress**, and I'm consistently adding more implementations, explanations, and optimizations. My goal is to:
 - 📚 Deepen the understanding of fundamental and advanced topics in computer science
 - 💻 Practice clean, well-documented C++ code
-- 📘 Continuously improve the efficiencyc of my implementations
+- 📘 Continuously improve the efficiency of my implementations
 ---
 
 ## 🧩 Topics Covered
