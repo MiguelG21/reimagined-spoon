@@ -6,10 +6,10 @@ A **binary tree** is a tree data structure where each node has at most two child
 
 The project is divided into the following files:
 
-- **`BinaryTree.h`**: Header file containing the declarations for the `Node` structure, `BinaryTree` class, and function prototypes for DFS and BFS traversals.
+- **`Header.h`**: Header file containing the declarations for the `Node` structure, `BinaryTree` class, and function prototypes for DFS and BFS traversals.
 - **`BinaryTree.cpp`**: Implements the core functionality of the `BinaryTree` class, including insertion, deletion, and traversal methods.
-- **`DFS.cpp`**: Implements the Depth-First Search (DFS) traversal functions (preorder, inorder, and postorder).
-- **`BFS.cpp`**: Implements the Breadth-First Search (BFS) traversal.
+- **`BinaryTree-DFS.cpp`**: Implements the Depth-First Search (DFS) traversal functions (preorder, inorder, and postorder).
+- **`BinaryTree-BFS.cpp`**: Implements the Breadth-First Search (BFS) traversal.
 - **`main.cpp`**: Contains the main function to test the binary tree functionality with sample input and display traversal results.
 
 ### Conceptual Division
