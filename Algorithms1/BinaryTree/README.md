@@ -53,14 +53,14 @@ The project is divided into the following files:
 ### Output of the `main` File
 
 When main is run, the output will be as follows:
-
-DFS Preorder: 50 30 20 40 70 60 80
-DFS Inorder: 20 30 40 50 60 70 80
-DFS Postorder: 20 40 30 60 80 70 50
-BFS: 50 30 70 20 40 60 80
-Total Nodes: 7
-Height of the tree: 3
-
+```
+  DFS Preorder: 50 30 20 40 70 60 80 
+  DFS Inorder: 20 30 40 50 60 70 80
+  DFS Postorder: 20 40 30 60 80 70 50
+  BFS: 50 30 70 20 40 60 80
+  Total Nodes: 7
+  Height of the tree: 3
+```
 ---
 
 - **DFS Preorder**: The nodes are printed as they are visited in **Preorder** traversal (Root -> Left -> Right).
